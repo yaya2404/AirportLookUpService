@@ -1,0 +1,57 @@
+Matthew Ya 152006467
+10/14/16
+
+DESCRIPTION
+A basic distributed systems program I made for a class. The program contains a client and two servers (Place server and Airport Server). The client requires two arguments which are the name of the city and state.
+It passes these two arguments into the PlaceServer which returns a Place object containing the name of the city, name of the state, latitude, and longitude. The client then passes the latitude and longitude of the 
+Place object into the AirportServer. The AiportServer then returns a String array containing the 5 nearest airports based on the given name of the city and state.
+NOTE: This program uses Google protocol buffers that I already created and compiled to contain the location information obtained from the binary files.
+
+STEPS FOR COMPILING AND RUNNING CODE
+
+1. Set classpath to directory containing project and include protobuf.jar in classpath. So it should look like this. ****THIS IS AN ABSOLUTE MUST****.
+
+		CLASSPATH = <PATHNAME>\AirportLookUpService;<PATHNAME>\protobuf.jar
+		
+2. Before compiling the files, make sure the necessary proto files (airportdata and placedata) were properly compiled and placed in the same directory as the project
+
+3. Compiling code:
+	
+	javac Client.java AirportServer.java PlaceServer.java
+	
+4. Start rmiregistry in commandline or which ever environment you use
+		
+		rmiregistry 1099
+		
+5. Start the PlaceServer in another commandline window:
+
+		java PlaceServer 1099
+	
+	Incase you want to specify the port number, simply add the port number.
+	
+6. Start the AirportServer in another commandline window:
+	
+		java AirportServer 1099
+		
+	Again, if you want to specify the port number, simply add the port number.
+	
+7. Start the Client in another commandline window:
+
+		java Client -h localhost -p 1099 Princeton NJ
+		
+	If you want to specify a host, the first argument must be "-h" and then the name of the host.
+	If you want to specify a port, you must include "-p" and then the port number.
+	Finally, the last two arguments are the names of the city and state respectively. 
+	
+Bugs and Peculiarities
+When returning the array of Airports, I actually return an Array of strings that correspond with the nearest Airports. The issue with my airportData object was that it was not
+"Serializable" which meant that I had to create a remote interface and implementation of that remote interface. This seemed useless because the client is only interested in what the
+5 nearest airports given the location which is just a String output and not the airportData object itself. The client has no use for the airportData object so returning a 
+String array containing the 5 nearest airports seemed the most sufficient solution. If at any point the client needed the actual airportData object, I would change the code to
+implement a remote interface but the client does not so it's not necessary.
+
+
+How I Search and Store Data
+I did not create a data structure for holding a Place object because the compiled protocol for Place was more than sufficient for my implementation.
+For Airports, I created a new object called airportData that included the following fields: code, name, state, and distance.
+For searching, I just implemented a simple for loop that went through the Airport and Place list linearly. 
