@@ -11,7 +11,7 @@ STEPS FOR COMPILING AND RUNNING CODE
 
 1. Set classpath to directory containing project and include protobuf.jar in classpath. So it should look like this. ****THIS IS AN ABSOLUTE MUST****.
 
-		CLASSPATH = <PATHNAME>\AirportLookUpService;<PATHNAME>\protobuf.jar
+		CLASSPATH = <PATHNAME>\AirportLookUpService;<PATHNAME>\protobuf.jar;
 		
 2. Before compiling the files, make sure the necessary proto files (airportdata and placedata) were properly compiled and placed in the same directory as the project
 
