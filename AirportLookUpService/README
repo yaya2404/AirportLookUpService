@@ -37,11 +37,22 @@ STEPS FOR COMPILING AND RUNNING CODE
 	
 7. Start the Client in another commandline window:
 
-		java Client -h localhost -p 1099 Princeton NJ
+		java Client -ah localhost -ap 1099 -ph localhost -pp 1099 Princeton NJ
 		
-	If you want to specify a host, the first argument must be "-h" and then the name of the host.
-	If you want to specify a port, you must include "-p" and then the port number.
-	Finally, the last two arguments are the names of the city and state respectively. 
+	-ah = this is the name of the host of the airportserver
+	-ap = this is the port number of the airportserver
+	-ph = this is the name of the host of the placeserver
+	-pp = this is the port nubmer of the placeserver
+	The last two arguments MUST BE the names of the city and state respectively.
+	
+	NOTE: In terms of host and port, order does not matter. You can enter that information in any particular order AS LONG AS you have -ap,-ah,-ph, or -pp before the hostname or port number.
+	However, the name of the city and state MUST be the last two arguments in order for this to work properly.
+	
+	If everything is being run on the same machine then you can just do:
+	
+		java Client Princeton NJ
+	
+	By default, the host name and port number of the placeserver and airportserver are set to localhost and 1099. 
 	
 Bugs and Peculiarities
 When returning the array of Airports, I actually return an Array of strings that correspond with the nearest Airports. The issue with my airportData object was that it was not
